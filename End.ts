@@ -12,6 +12,8 @@ let level: number; // gibt die Anzahl der Sounds an, die wiederholt werden müss
 let startPressed: number = 0; //anzahl wie oft der startbutton benutzt wurde
 let playing: boolean = false;
 
+debugger;
+
 
 const turnCounter: HTMLElement = document.querySelector("#turn"); //speichert das HTML Element mit der id turn, hier schreiben wir später rein, in welchem Zug wir uns befinden
 const bell: HTMLElement = document.querySelector("#button1"); // speichert den boobutton
@@ -141,7 +143,7 @@ function five() { // analog
 }
 
 
-boo.addEventListener('click', (event) => {  // wir registrieren auf das click event des boo buttons folgenden code 
+bell.addEventListener('click', (event) => {  // wir registrieren auf das click event des boo buttons folgenden code 
     if (on && playing) { // prüfen, ob die variable on auf true ist (Erinnerung: die on Variable gibt hier an, ob der User derzeit buttons betätigen kann), falls ja:
         playerOrder.push(1); // fügt dem playerOrder Array (dieser speichert die Sounds, die der Spieler ausgewählt hat) eine 1 hinzu (Diese steht für den boo sound)
         check(); // prüfen, ob die gewählten sounds korrekt sind und ob das spiel gewonnen wurde, genaue Funktionsweise später
@@ -153,7 +155,7 @@ boo.addEventListener('click', (event) => {  // wir registrieren auf das click ev
     }
 })
 
-laugh.addEventListener('click', (event) => { //analog
+sirene.addEventListener('click', (event) => { //analog
     if (on && playing) {
         playerOrder.push(2);
         check();
@@ -165,7 +167,7 @@ laugh.addEventListener('click', (event) => { //analog
     }
 })
 
-duck.addEventListener('click', (event) => { //analog
+laugh.addEventListener('click', (event) => { //analog
     if (on && playing) {
         playerOrder.push(3);
         check();
@@ -177,7 +179,7 @@ duck.addEventListener('click', (event) => { //analog
     }
 })
 
-boing.addEventListener('click', (event) => { //analog
+snare.addEventListener('click', (event) => { //analog
     if (on && playing) {
         playerOrder.push(4);
         check();
@@ -189,7 +191,7 @@ boing.addEventListener('click', (event) => { //analog
     }
 })
 
-applause.addEventListener('click', (event) => {//analog
+hihat.addEventListener('click', (event) => {//analog
     if (on && playing) {
         playerOrder.push(5);
         check();

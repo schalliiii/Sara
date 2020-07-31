@@ -1,46 +1,47 @@
-let order = []; // Array, in dem die zufällig generierten Töne gespeichert werden, die der PC abspielt
-let playerOrder = []; // Array, in dem die vom Nutzer ausgewählten Töne gespeichert werden (wird jede Runde neu gefüllt)
-let flash; // Speichert wie viele Sounds gespielt wurden (in der jeweiligen Runde)
-let turn; // Speichert in welchem Zug / welcher Runde wir uns befinden
-let good; // boolean Wert, true wenn der User die richtigen Töne wiederholt hat, false wenn nicht
-let compTurn; // boolean Wert, speichert wer dran ist mit Töne spielen (true = computer, false = user)
-let intervalId; // Hier wird eine Funktion gespeichert
-let noise = true; // Gibt an. ob ein Sound gemacht werden soll (boolean)
-let on = true; // ist Programm an?
-let win; // hat der User schon gewonnen?
-let level; // gibt die Anzahl der Sounds an, die wiederholt werden müssen zum Gewinnen
-let startPressed = 0; //anzahl wie oft der startbutton benutzt wurde
-let playing = false;
-const turnCounter = document.querySelector("#turn"); //speichert das HTML Element mit der id turn, hier schreiben wir später rein, in welchem Zug wir uns befinden
-const bell = document.querySelector("#button1"); // speichert den boobutton
-const sirene = document.querySelector("#button2"); // speichert den laughbutton
-const laugh = document.querySelector("#button3"); // speichert den duckbutton
-const snare = document.querySelector("#button4"); // speichert den boingbutton
-const hihat = document.querySelector("#button5"); // speichert den applausebutton
-const onButton = document.querySelector("#on"); // speichert den on Button
-const startButton = document.querySelector("#start"); // speichert den Startbutton
-const levelOne = document.querySelector("#levelone"); // speichert den level 1 button
-const levelTwo = document.querySelector("#leveltwo"); // speichert den level 2 button
-const levelThree = document.querySelector("#levelthree"); // speichert den level 3 button
-const levelFour = document.querySelector("#levelfour"); // speichert den level 4 button
-const soundButtons = [bell, sirene, laugh, snare, hihat];
-const levelButtons = [levelOne, levelTwo, levelThree, levelFour];
+var order = []; // Array, in dem die zufällig generierten Töne gespeichert werden, die der PC abspielt
+var playerOrder = []; // Array, in dem die vom Nutzer ausgewählten Töne gespeichert werden (wird jede Runde neu gefüllt)
+var flash; // Speichert wie viele Sounds gespielt wurden (in der jeweiligen Runde)
+var turn; // Speichert in welchem Zug / welcher Runde wir uns befinden
+var good; // boolean Wert, true wenn der User die richtigen Töne wiederholt hat, false wenn nicht
+var compTurn; // boolean Wert, speichert wer dran ist mit Töne spielen (true = computer, false = user)
+var intervalId; // Hier wird eine Funktion gespeichert
+var noise = true; // Gibt an. ob ein Sound gemacht werden soll (boolean)
+var on = true; // ist Programm an?
+var win; // hat der User schon gewonnen?
+var level; // gibt die Anzahl der Sounds an, die wiederholt werden müssen zum Gewinnen
+var startPressed = 0; //anzahl wie oft der startbutton benutzt wurde
+var playing = false;
+debugger;
+var turnCounter = document.querySelector("#turn"); //speichert das HTML Element mit der id turn, hier schreiben wir später rein, in welchem Zug wir uns befinden
+var bell = document.querySelector("#button1"); // speichert den boobutton
+var sirene = document.querySelector("#button2"); // speichert den laughbutton
+var laugh = document.querySelector("#button3"); // speichert den duckbutton
+var snare = document.querySelector("#button4"); // speichert den boingbutton
+var hihat = document.querySelector("#button5"); // speichert den applausebutton
+var onButton = document.querySelector("#on"); // speichert den on Button
+var startButton = document.querySelector("#start"); // speichert den Startbutton
+var levelOne = document.querySelector("#levelone"); // speichert den level 1 button
+var levelTwo = document.querySelector("#leveltwo"); // speichert den level 2 button
+var levelThree = document.querySelector("#levelthree"); // speichert den level 3 button
+var levelFour = document.querySelector("#levelfour"); // speichert den level 4 button
+var soundButtons = [bell, sirene, laugh, snare, hihat];
+var levelButtons = [levelOne, levelTwo, levelThree, levelFour];
 function addLevelListeners() {
-    levelOne.addEventListener('click', (event) => {
+    levelOne.addEventListener('click', function (event) {
         level = 5;
     }); // Auf das click event des level one buttons wird eine anonyme Funktion registriert, die die Level Variable auf 5 setzt, d.h. dass jedes mal wenn jemand auf denen level 1 button drückt, die level Variable auf 5 gesetzt wird. Erinnerung: Die level Variable speichert, wie viele Sounds der User wiederholen muss, damit er gewinnt
-    levelTwo.addEventListener('click', (event) => {
+    levelTwo.addEventListener('click', function (event) {
         level = 15;
     }); // Auf das click event des level one buttons wird eine anonyme Funktion registriert, die die Level Variable auf 10 setzt, d.h. dass jedes mal wenn jemand auf denen level 2 button drückt, die level Variable auf 10 gesetzt wird. Erinnerung: Die level Variable speichert, wie viele Sounds der User wiederholen muss, damit er gewinnt
-    levelThree.addEventListener('click', (event) => {
+    levelThree.addEventListener('click', function (event) {
         level = 25;
     }); // Auf das click event des level one buttons wird eine anonyme Funktion registriert, die die Level Variable auf 15 setzt, d.h. dass jedes mal wenn jemand auf denen level 3 button drückt, die level Variable auf 15 gesetzt wird. Erinnerung: Die level Variable speichert, wie viele Sounds der User wiederholen muss, damit er gewinnt
-    levelFour.addEventListener('click', (event) => {
+    levelFour.addEventListener('click', function (event) {
         level = 35;
     }); // Auf das click event des level one buttons wird eine anonyme Funktion registriert, die die Level Variable auf 25 setzt, d.h. dass jedes mal wenn jemand auf denen level 4 button drückt, die level Variable auf 25 gesetzt wird. Erinnerung: Die level Variable speichert, wie viele Sounds der User wiederholen muss, damit er gewinnt
 }
 addLevelListeners();
-startButton.addEventListener('click', (event) => {
+startButton.addEventListener('click', function (event) {
     if (!level) {
         alert("Bitte Level auswählen");
         return;
@@ -79,7 +80,7 @@ function gameTurn() {
         on = true; // setze on variable (boolean) auf true, ermöglicht dem Spieler Sounds abzuspielen
     }
     if (compTurn) { // Prüfen, ob der PC am Zug ist. Falls ja:              Anmerkung: Diese Bedinung ist immer wahr, wenn die Prüfung oben drüber falsch ist
-        setTimeout(() => {
+        setTimeout(function () {
             if (order[flash] == 1)
                 one(); // prüft, ob das Element aus dem Order array(Erinnerung: speichert die vorgegebenen Sounds) eine 1 ist  (erinnerung: 1 ist der boo sound) Falls ja: ruft die Funktion one auf (diese spielt den boo sound, genaue funktionsweise wird später erklärt) falls nein: es geschieht nichts 
             if (order[flash] == 2)
@@ -124,57 +125,57 @@ function five() {
     }
     noise = true;
 }
-boo.addEventListener('click', (event) => {
+bell.addEventListener('click', function (event) {
     if (on && playing) { // prüfen, ob die variable on auf true ist (Erinnerung: die on Variable gibt hier an, ob der User derzeit buttons betätigen kann), falls ja:
         playerOrder.push(1); // fügt dem playerOrder Array (dieser speichert die Sounds, die der Spieler ausgewählt hat) eine 1 hinzu (Diese steht für den boo sound)
         check(); // prüfen, ob die gewählten sounds korrekt sind und ob das spiel gewonnen wurde, genaue Funktionsweise später
         one(); // spielt den boo sound ab
         if (!win) { // prüft ob das Spiel gewonnen ist, falls nicht:
-            setTimeout(() => {
+            setTimeout(function () {
             }, 300);
         }
     }
 });
-laugh.addEventListener('click', (event) => {
+sirene.addEventListener('click', function (event) {
     if (on && playing) {
         playerOrder.push(2);
         check();
         two();
         if (!win) {
-            setTimeout(() => {
+            setTimeout(function () {
             }, 300);
         }
     }
 });
-duck.addEventListener('click', (event) => {
+laugh.addEventListener('click', function (event) {
     if (on && playing) {
         playerOrder.push(3);
         check();
         three();
         if (!win) {
-            setTimeout(() => {
+            setTimeout(function () {
             }, 300);
         }
     }
 });
-boing.addEventListener('click', (event) => {
+snare.addEventListener('click', function (event) {
     if (on && playing) {
         playerOrder.push(4);
         check();
         four();
         if (!win) {
-            setTimeout(() => {
+            setTimeout(function () {
             }, 300);
         }
     }
 });
-applause.addEventListener('click', (event) => {
+hihat.addEventListener('click', function (event) {
     if (on && playing) {
         playerOrder.push(5);
         check();
         five();
         if (!win) {
-            setTimeout(() => {
+            setTimeout(function () {
             }, 300);
         }
     }
@@ -288,8 +289,7 @@ function addElement() {
 // der fehler hält den compiler noch davon ab, die datei in javascript zu übersetzen, allerdings funktioniert die datei wie gewollt wenn man sie direkt als javascript datei benutzt.
 // hier ist noch nichts typisiert, das mache ich noch
 function removeClass() {
-    soundButtons.forEach(element => {
+    soundButtons.forEach(function (element) {
         element.classList.remove("highlight");
     });
 }
-//# sourceMappingURL=End.js.map
